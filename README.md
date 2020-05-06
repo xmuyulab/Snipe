@@ -1,21 +1,26 @@
 # Snipe
 ## Snipe:Identification of food-borne pathogens with low abundance
 ### Introduction
-Snipe (SeNsItive Pathogen dEtection) wraps around the metagenomic strain-typing tool Pathoscope 2.0 with Strain Specific Region (SSR) based abundance rectification to improve its sensitivity and specificity in detecting pathogens at extremely low abundance.  It consists of three modules for sequencing-based metagenomic profiling. The snipeMap module the NGS reads aligns to the target and filter reference library which we build before. The snipeId module, using an Expectation-Maximization (EM) algorithm to search for the best parameter estimates for the proportion of mapped reads. The snipeRec module, by FDR control, the metagenomic reads are first aligned to the species-specific regions (SSRs) using Bowtie2 with default settings. The sum of the numbers of reads aligned to SSR with editing distance less than or equal to 3 are counted as total number of SSR reads, the identification result will be presented on both species level and strain level. Report files: 1) a summary report (*_abundance.tsv) that contains the abundance of each strain after correction and before correction. 2) corrector documented our correction factors for different species  3) result folder keep the results of Pathoscope2. 
+Snipe (SeNsItive Pathogen dEtection) wraps around Pathoscope 2.0 with species-specific genomic regions (SSRs) based abundance rectification to improve its sensitivity and specificity in detecting pathogens at low abundance. 
+Snipe consists of three modules:
+- The snipeMap module will map unassembled metagenomic reads against a target library and remove sequences that align to the filter and host libraries. 
+- The snipeId module will reassign ambiguous reads, identify microbial strains present in the sample, and estimate proportions of reads from each genome. 
+- The snipeRec module will align raw reads to SSRs and generate reports containing read proportions to each genome after rectification by the a posteriori probabilities.
+ 
 
-### Pathogenic Species Currently Supported
-Species name | The Number of genomes
+### Pathogenic Species Supported
+Species name | Number of SSRs
 -|-
-Escherichia coli | 1028
-Salmonella enterica | 836
-Staphylococcus aureus | 534
-Listeria monocytogenes | 201
-Campylobacter jejuni | 174
-Vibrio cholerae | 63
-Vibrio parahaemolyticus | 55
-Proteus mirabilis | 29
-Yersinia enterocolitica | 18
-Clostridium perfringens | 13
+Escherichia coli | 98
+Salmonella enterica | 387
+Staphylococcus aureus | 169
+Listeria monocytogenes | 157
+Campylobacter jejuni | 132
+Vibrio cholerae | 261
+Vibrio parahaemolyticus | 1206
+Proteus mirabilis | 1122
+Yersinia enterocolitica | 141
+Clostridium perfringens | 2377
 
 ### Install Software Dependencies
        • bowtie2
@@ -33,7 +38,7 @@ First of all, we should:
   python snipe.py -h
   ```
 #### map
-We need the database of strains, which can be downloaded in NCBI.First you need to make sure that the index has been established otherwise the software will take a moment to build the index.
+We need the database of strains, which can be downloaded from NCBI. First you need to make sure that the index has been established otherwise the software will take a moment to build the index.
 
 call snipeMap module help for details
 ```
@@ -84,8 +89,8 @@ Required arguments:
 
 ```
 #### rec
-We need  the database of the core part of strains.Attention should be paid to the naming of the core part of the strain.
-.e.g.(strain named Bacillus_cereus ,core part of strain named: only_Bacillus_cereus_blastn ) 
+We need the database of the core part of strains. Attention should be paid to the naming of the core part of the strain.
+.e.g. (strain named Bacillus_cereus, core part of strain named: only_Bacillus_cereus_blastn ) 
 
 call snipeId module help for details
 
