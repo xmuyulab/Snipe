@@ -1,8 +1,22 @@
 # Snipe
 ## Snipe:Identification of food-borne pathogens with low abundance
 ### Introduction
-Snipe (SeNsItive Pathogen dEtection) wraps around the metagenomic strain-typing tool Pathoscope 2.0 with Strain Specific Region (SSR) based abundance rectification to improve its sensitivity and specificity in detecting pathogens at extremely low abundance.  It consists of three modules for sequencing-based metagenomic profiling. The snipeMap module firstly NGS reads are filtered by BWA aligned to the species-specific regions,secondly aligns the reads to the target reference library which we build before. The snipeId module, using an Expectation-Maximization (EM) algorithm to search for the best parameter estimates for the proportion of mapped reads. The snipeRec module, by FDR control, the identification result will be presented on both species level and strain level. Report files: 1) a summary report (*_abundance.tsv) that contains the abundance of each strain after correction and before correction. 2) corrector documented our correction factors for different species  3) result folder keep the results of Pathoscope2. 
- 
+Snipe (SeNsItive Pathogen dEtection) wraps around the metagenomic strain-typing tool Pathoscope 2.0 with Strain Specific Region (SSR) based abundance rectification to improve its sensitivity and specificity in detecting pathogens at extremely low abundance.  It consists of three modules for sequencing-based metagenomic profiling. The snipeMap module the NGS reads aligns to the target and filter reference library which we build before. The snipeId module, using an Expectation-Maximization (EM) algorithm to search for the best parameter estimates for the proportion of mapped reads. The snipeRec module, by FDR control, the metagenomic reads are first aligned to the species-specific regions (SSRs) using Bowtie2 with default settings. The sum of the numbers of reads aligned to SSR with editing distance less than or equal to 3 are counted as total number of SSR reads, the identification result will be presented on both species level and strain level. Report files: 1) a summary report (*_abundance.tsv) that contains the abundance of each strain after correction and before correction. 2) corrector documented our correction factors for different species  3) result folder keep the results of Pathoscope2. 
+
+### Pathogenic Species Currently Supported
+Species name | The Number of genomes
+-|-
+Escherichia coli | 1028
+Salmonella enterica | 836
+Staphylococcus aureus | 534
+Listeria monocytogenes | 201
+Campylobacter jejuni | 174
+Vibrio cholerae | 63
+Vibrio parahaemolyticus | 55
+Proteus mirabilis | 29
+Yersinia enterocolitica | 18
+Clostridium perfringens | 13
+
 ### Install Software Dependencies
        • bowtie2
             conda install -c bioconda bowtie2
