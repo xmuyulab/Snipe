@@ -56,7 +56,7 @@ def rec(snipeReOptions):
     for core in all_core:
         if os.path.exists('%s/%s/only_%s_blastn.1.bt2'%(path,core,core)):
            continue
-        cmd1 = 'bowtie2-build  %s/%s/onlt_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
+        cmd1 = 'bowtie2-build  %s/%s/only_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
         os.system(cmd1)
 
   ###### rec  ######

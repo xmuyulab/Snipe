@@ -23,11 +23,21 @@ Yersinia enterocolitica | 141
 Clostridium perfringens | 2377
 
 ### Install Software Dependencies
-       • bowtie2
+It is recommended to create a new conda environment:
+```
+conda create -n python27 python=2.7
+
+# Activate this environment:
+conda activate python27
+```
+       • numpy (v1.15.0)
+            conda install -c conda-forge numpy
+       • pandas (v0.24.2)
+            conda install -c conda-forge pandas
+       • bowtie2 (v2.3.5.1)
             conda install -c bioconda bowtie2
-       • pysam
+       • pysam (v0.15.3)
             conda install -c bioconda pysam 
-            
 
 ### Manual
 First of all, we should:

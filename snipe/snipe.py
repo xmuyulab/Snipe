@@ -2,10 +2,10 @@ import os
 import sys
 aquiladir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,aquiladir) 
-from snipe.sniperec import snipeRec
-from snipe.snipemap import snipeMap
-from snipe.snipeid import snipeId
-from snipe._version import VERSION
+from sniperec import snipeRec
+from snipemap import snipeMap
+from snipeid import snipeId
+from _version import VERSION
 from time import time
 import argparse
 
