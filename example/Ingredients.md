@@ -1,11 +1,15 @@
 # Make sure you have all the ingredients
+```
 python -V
-![Image text](images/python.png)
+```
+![Image text](https://github.com/xmuyulab/Snipe/blob/master/example/images/python.png)
+```
 bowtie2 --version
-![Image text](images/bowtie2.png)
+```
+![Image text](https://github.com/xmuyulab/Snipe/blob/master/example/images/bowtie2.png)
 ```
 pysam.__version__
 pandas.__version__
 numpy.__version__
 ```
-![Image text](images/pakgs.png)
+![Image text](https://github.com/xmuyulab/Snipe/blob/master/example/images/pakgs.png)
