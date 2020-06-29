@@ -1,4 +1,4 @@
-#Make sure you have all the ingredients
+# Make sure you have all the ingredients
 python -V
 ![Image text](images/python.png)
 bowtie2 --version

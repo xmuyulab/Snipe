@@ -103,7 +103,7 @@ Required arguments:
 
 
 ```
-#### rec
+#### REC
 We need the database of the core part of strains. Attention should be paid to the naming of the core part of the strain.
 .e.g. (strain named Bacillus_cereus, core part of strain named: only_Bacillus_cereus_blastn ) 
 
@@ -140,29 +140,29 @@ Optional arguments:
 
 ###Output TSV file format
 Columns in the TSV file:
-####1.Genomes:
+#### 1.Genomes:
 This is the name of the genome found in the alignment file.
-####2.Accession ID:
+#### 2.Accession ID:
 Gene number used by NCBI database.
-####3.Rectified Final Guess:
+#### 3.Rectified Final Guess:
 This represent the percentage of reads that are mapped to the genome in Column 1 after snipe using SSRs rectify.
-####4.Final Guess:
+#### 4.Final Guess:
 This represent the percentage of reads that are mapped to the genome in Column 1 (reads aligning to multiple genomes are assigned proportionally) after snipe reassignment is performed.
-####5.Rectified Probability:
+#### 5.Rectified Probability:
 This represent rectification coefficient.
-####6.SSR Aligned Reads:
+#### 6.SSR Aligned Reads:
 This represent the number of reads that are mapped to the SSRs in Column 1.
-####7.Rectified Abundance:
+#### 7.Rectified Abundance:
 This represent the abundance after using SSRs rectifiy.
-####8.Initial Abundance:
+#### 8.Initial Abundance:
 This represent the abundance before using SSRs rectifiy.
-####9.Final Best Hit:
+#### 9.Final Best Hit:
 This represent the percentage of reads that are mapped to the genome in Column 1 after assigning each read uniquely to the genome with the highest score and after pathoscope reassignment is performed.
-####10.Final Best Hit Read Numbers:
+#### 10.Final Best Hit Read Numbers:
 This represent the number of best hit reads that are mapped to the genome in Column 1 (may include a fraction when a read is aligned to multiple top hit genomes with the same highest score) and after pathoscope reassignment is performed.
 
 
-###Step-by-step example
+### Step-by-step example
 [Make sure you have all the ingredients](example/Ingredients.md)
 [The SnipeMap module](example/SnipeMap.md)
 [The SnipeID module](example/SnipeID.md)
