@@ -138,7 +138,7 @@ Optional arguments:
 
 ```
 
-###Output TSV file format
+### Output TSV file format
 Columns in the TSV file:
 #### 1.Genomes:
 This is the name of the genome found in the alignment file.
