@@ -163,7 +163,7 @@ This represent the number of best hit reads that are mapped to the genome in Col
 
 
 ### Step-by-step example
-[Make sure you have all the ingredients](example/Ingredients.md)
-[The SnipeMap module](example/SnipeMap.md)
-[The SnipeID module](example/SnipeID.md)
-[The SnipeRec module](example/SnipeRec.md)
+#### 0. [Make sure you have all the ingredients](example/Ingredients.md)
+#### 1. [The SnipeMap module](example/SnipeMap.md)
+#### 2. [The SnipeID module](example/SnipeID.md)
+#### 3. [The SnipeRec module](example/SnipeRec.md)
