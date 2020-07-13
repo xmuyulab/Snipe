@@ -54,7 +54,7 @@ def rec(PathoRecOptions):
     for core in all_core:
         if os.path.exists('%s/%s/only_%s_blastn.1.bt2'%(path,core,core)):
            continue
-        cmd1 = 'bowtie2-build  %s/%s/onlt_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
+        cmd1 = 'bowtie2-build  %s/%s/only_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
         os.system(cmd1)
 
   ###### rec  ######
@@ -138,13 +138,13 @@ def rec(PathoRecOptions):
         else:
             if g in dict_target:
               species = dict_target[g]
-            if species in dict_c:
-              cor.append(dict_c[species])
-              lst_nm0.append(dict0[species])
-              lst_nmsum.append(dict_sum[species])
-            else:
-              cor.append(0)
-              lst_nmsum.append(0)
+        if species in dict_c:
+            cor.append(dict_c[species])
+            lst_nm0.append(dict0[species])
+            lst_nmsum.append(dict_sum[species])
+        else:
+            cor.append(0)
+            lst_nmsum.append(0)
     for i in range(len(lst)):
         abu.append(lst1[i]/n_p)
         abu_rec.append(lst1[i]*cor[i]/n_p)
