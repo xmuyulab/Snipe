@@ -69,11 +69,14 @@ def rec(PathoRecOptions):
     dict_target = eval(c)
     f.close()
     dict0 = {}
+    dict1 = {}
+    dict2 = {}
     for key in dict_target:
         if dict_target[key] not in dict0:
            dict0[dict_target[key]] = 0
-    dict1 = dict0
-    dict2 = dict0
+    for key in dict0:
+        dict1[key] = dict0[key]
+        dict2[key] = dict0[key]
     dict_sum = {}
     for core in all_core:
         cmd2 = 'bowtie2 -p %d -x %s/%s/only_%s_blastn -1 %s -2 %s -S %s/%s_%s.sam'%(t,path,core,core,r1,r2,o_path,core,tag_name)
