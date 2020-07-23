@@ -1,6 +1,5 @@
 # REC Module
 ```
-python snipe.py REC -ssrRef '/home/hb/Snipe/snipe/core_merge' -1 '/media/hb/Seagate/genomes/result10w/NC_000943/0/NC_000943_read1.fq' -2 '/media/hb/Seagate/genomes/result10w/NC_000943/0/NC_000943_read2.fq' -idReport '/home/hb/桌面/Snipe/test/test-sam-report.tsv'  -dictTarget '/media/hb/Seagate/genomes/ultrastrain2/dict/dict_target' -dictTemplate '/media/hb/Seagate/genomes/ultrastrain2/dict/dict_template' -outDir '/home/hb/桌面/Snipe/test'  -expTag test
+python ./snipe/snipe.py REC -ssrRef ./core/ -1 ./example/C15_R1.fastp35.fastq -2 ./example/C15_R2.fastp35.fastq -idReport C15-sam-report.tsv -dictTarget ./dict/dict_target -dictTemplate ./dict/dict_template -expTag C15 -outDir ./ -numThreads 44
 
 ```
-![Image text](images/rec.png)
