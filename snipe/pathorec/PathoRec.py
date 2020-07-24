@@ -54,7 +54,7 @@ def rec(PathoRecOptions):
     for core in all_core:
         if os.path.exists('%s/%s/only_%s_blastn.1.bt2'%(path,core,core)):
            continue
-        cmd1 = 'bowtie2-build  %s/%s/only_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
+        cmd1 = 'bowtie2-build  %s/%s/onlt_%s_blastn.fasta %s/%s/only_%s_blastn'%(path,core,core,path,core,core)
         os.system(cmd1)
 
   ###### rec  ######
@@ -64,55 +64,49 @@ def rec(PathoRecOptions):
     counts0 = []
     counts1 = []
     counts2 = []
-    f =open('%s'%(dict_target),'r')
+    f = open('%s'%(dict_target),'r')
     c = f.read()
     dict_target = eval(c)
     f.close()
     dict0 = {}
     dict1 = {}
     dict2 = {}
+    dict_sum = {} 
     for key in dict_target:
         if dict_target[key] not in dict0:
            dict0[dict_target[key]] = 0
-    for key in dict0:
-        dict1[key] = dict0[key]
-        dict2[key] = dict0[key]
-    dict_sum = {}
+           dict1[dict_target[key]] = 0
+           dict2[dict_target[key]] = 0
     for core in all_core:
         cmd2 = 'bowtie2 -p %d -x %s/%s/only_%s_blastn -1 %s -2 %s -S %s/%s_%s.sam'%(t,path,core,core,r1,r2,o_path,core,tag_name)
         os.system(cmd2)
-        print (cmd2)
-        #if sam_file.endswith('.sam'):
         bf = pysam.AlignmentFile('%s/%s_%s.sam'%(o_path,core,tag_name),'r')
-        #else:
-           #continue
         sc = core.split('_')[0] + ' '+core.split('_')[1]
         for r in bf:
-            if r.cigarstring!=None:
+            if r.cigarstring != None:
                 if 'S' not in str(r.cigarstring) and 'H' not in str(r.cigarstring):  
-                    if r.has_tag("NM"):
+                    if r.has_tag("NM") and r.query_length > 50:
                         if r.get_tag("NM") == 0:
                             dict0[sc]+=1
                         if r.get_tag("NM") == 1:
                             dict1[sc]+=1
                         if r.get_tag("NM") == 2:
                             dict2[sc]+=1
-        for key in dict0:
-            dict_sum[key] = dict0[key]+dict1[key]+dict2[key]
+     
         bf.close()
         os.remove('%s/%s_%s.sam'%(o_path,core,tag_name))
+    for key in dict0:
+        dict_sum[key] = dict0[key]+dict1[key]+dict2[key]
     dict_c = {}
     n_p = int(os.popen('less %s | grep @ | wc -l'%(r1)).read())
     for key in dict_sum: 
         dict_c[key] = correct(n_p,dict_sum[key])
-    f_c =open('%s-ssrp'%(tag_name),'w')
-    f_c.write(str(dict_c))
-    f_c.close()
-    os.system('mv -f %s-ssrp %s'%(tag_name,o_path))
     cmd_c =  'cp %s %s/%s_temp.tsv'%(report,o_path,tag_name)
     os.system(cmd_c)
-    cmd_s = 'sed -i 1d %s/%s_temp.tsv'%(o_path,tag_name)
-    os.system(cmd_s)
+    rebk = os.system("less %s/%s_temp.tsv | grep 'Total Number of Aligned Reads'"%(o_path,tag_name))
+    if rebk==0:
+        cmd_s = 'sed -i 1d %s/%s_temp.tsv'%(o_path,tag_name)
+        os.system(cmd_s)
     data = pd.read_csv('%s/%s_temp.tsv'%(o_path,tag_name),sep='\t')
     f =open('%s'%(dict_template),'r')
     c = f.read()
@@ -135,12 +129,11 @@ def rec(PathoRecOptions):
            lst_genomes.append(dict_template[g])
         else:
            lst_genomes.append('')
-        #print (dict_template[g])
         if len(g.split('_')) > 2:
            species = g.split('_')[0]+' '+g.split('_')[1]
         else:
             if g in dict_target:
-              species = dict_target[g]
+                species = dict_target[g]
         if species in dict_c:
             cor.append(dict_c[species])
             lst_nm0.append(dict0[species])

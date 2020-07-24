@@ -2,7 +2,7 @@
 ## Snipe: Highly sensitive pathogen detection from metagenomic sequencing data
 ### Introduction
 Snipe (SeNsItive Pathogen dEtection), a pipeline for improving the ability of existing strain-typing tools to detect common pathogens from contaminated food samples at low abundances.
-Snipe consists of three modules:
+Snipe consists of three core modules:
 - The snipeMap module will map unassembled metagenomic reads against a target library and remove sequences that align to the filter and host libraries. 
 - The snipeId module will reassign ambiguous reads, identify microbial strains present in the sample, and estimate proportions of reads from each genome. 
 - The snipeRec module will align raw reads to SSRs and generate reports containing read proportions to each genome after rectification by the a posteriori probabilities.
@@ -139,6 +139,30 @@ Optional arguments:
 
 ```
 
+### Step-by-step example
+#### 0. [Make sure you have all the ingredients]
+```
+bowtie2 --version
+python -V
+import pysam, pandas, numpy
+pysam.__version__
+pandas.__version__
+numpy.__version__
+```
+#### 1. [The SnipeMap module]
+```
+python ./snipe/snipe.py MAP -1 example/demo_R1.fastp35.fastq -2 example/demo_R2.fastp35.fastq -targetRefFiles ./refDB/target.fna -filterRefFiles ./refDB/filter.fna -indexDir ./refDB/ -outDir ./ -outAlign demo.sam -expTag demo -numThreads 44
+```
+#### 2. [The SnipeID module]
+```
+python ./snipe/snipe.py ID -alignFile ./demo.sam -fileType sam -outDir ./ -expTag demo
+```
+#### 3. [The SnipeRec module]
+```
+python ./snipe/snipe.py REC -ssrRef ./core/ -1 ./example/demo_R1.fastp35.fastq -2 ./example/demo_R2.fastp35.fastq -idReport demo-sam-report.tsv -dictTarget ./dict/dict_target -dictTemplate ./dict/dict_template -expTag demo -outDir ./ -numThreads 44
+```
+
+
 ### Output TSV file format
 Columns in the TSV file:
 #### 1.Genomes:
@@ -162,9 +186,3 @@ This represents the percentage of reads that are mapped to the genome in Column 
 #### 10.Final Best Hit Read Numbers:
 This represents the number of best hit reads that are mapped to the genome in Column 1 (may include a fraction when a read is aligned to multiple top hit genomes with the same highest score) and after pathoscope reassignment is performed.
 
-
-### Step-by-step example
-#### 0. [Make sure you have all the ingredients](example/Ingredients.md)
-#### 1. [The SnipeMap module](example/SnipeMap.md)
-#### 2. [The SnipeID module](example/SnipeID.md)
-#### 3. [The SnipeRec module](example/SnipeRec.md)
