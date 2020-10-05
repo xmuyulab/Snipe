@@ -10,6 +10,9 @@ class PathoRecOptions:
       id_file = ""
       out_path = ""
       threads = 1
+      l_value = 1.0
+      p0_value = 5e-10
+      p1_value = 2.2e-5
       exp_tag = ""
       dict_ta = ""
       dict_te = "" 
@@ -29,12 +32,13 @@ input:
 
 '''
 # Rectification
-def correct(sample_size,nm_sum):
-    p1=2.2e-5
-    p0=5e-10
+def correct(l_v,p0_v,p1_v,sample_size,nm_sum):
+    l = l_v
+    p0 = p0_v
+    p1 = p1_v
     lambdan = np.power((1-p0)/(1-p1),sample_size-nm_sum)
     qr = np.power(p0/p1,nm_sum)
-    return 1. / (1. + lambdan*qr)
+    return 1. / (1. + l*lambdan*qr)
 
 def rec(PathoRecOptions):
 ################### index_core model #################
@@ -43,6 +47,9 @@ def rec(PathoRecOptions):
     r1 = PathoRecOptions.read1
     r2 = PathoRecOptions.read2
     t = PathoRecOptions.threads
+    l = PathoRecOptions.l_value
+    p0 = PathoRecOptions.p0_value
+    p1 = PathoRecOptions.p1_value
     o_path = PathoRecOptions.out_path
     report = PathoRecOptions.id_file
     dict_target = PathoRecOptions.dict_ta
@@ -100,7 +107,7 @@ def rec(PathoRecOptions):
     dict_c = {}
     n_p = int(os.popen('less %s | grep @ | wc -l'%(r1)).read())
     for key in dict_sum: 
-        dict_c[key] = correct(n_p,dict_sum[key])
+        dict_c[key] = correct(l,p0,p1,n_p,dict_sum[key])
     cmd_c =  'cp %s %s/%s_temp.tsv'%(report,o_path,tag_name)
     os.system(cmd_c)
     rebk = os.system("less %s/%s_temp.tsv | grep 'Total Number of Aligned Reads'"%(o_path,tag_name))

@@ -185,6 +185,12 @@ parser_d.add_argument('-outDir',action='store',default='.',dest='rec_outDir',req
 help='Output Directory (Default=.(current directory))')
 parser_d.add_argument('-numThreads', action='store', dest='rec_numthreads', required=False, 
 default=1, type=int, help='Number of threads to use  default (1)')
+parser_d.add_argument('-likelihoodRatioL', action='store', dest='likelihood_Ratio_L', required=False, 
+default=1.0, type=float, help='the likelihood ratio L to use  default (1.0)')
+parser_d.add_argument('-probP0', action='store', dest='probability_p0', required=False, 
+default=5e-10, type=float, help='the probability of p0 to use  default (5e-10)')
+parser_d.add_argument('-probP1', action='store', dest='probability_p1', required=False, 
+default=2.2e-5, type=float, help='the probability of p1 to use  default (2.2e-5)')
 parser_d.add_argument('-expTag', action='store', default='pathorec', dest='rec_exp_tag',
 	help='Experiment Tag added to files generated for identification (Default: pathorec)')
 
@@ -241,7 +247,7 @@ def main():
 	
 	#### PathoID modules ####
 	
-	start = time();
+	start = time()
 	
 	if (inputArgs.subcommand=='LIB'):
 		################################################$
@@ -320,6 +326,9 @@ def main():
 		if len(inputArgs.rec_outDir)>0:
 			PathoRecOptions.out_path = inputArgs.rec_outDir
 		PathoRecOptions.threads = inputArgs.rec_numthreads
+		PathoRecOptions.l_value = inputArgs.likelihood_Ratio_L
+		PathoRecOptions.p0_value = inputArgs.probability_p0
+		PathoRecOptions.p1_value = inputArgs.probability_p1
 		PathoRecOptions.exp_tag = inputArgs.rec_exp_tag
 		PathoRec.rec(PathoRecOptions)
 
